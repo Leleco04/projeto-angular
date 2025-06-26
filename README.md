@@ -33,12 +33,9 @@ O sistema foi projetado com foco em boas práticas utilizando componentes e rota
 O projeto foi construído utilizando as tecnologias mais modernas do ecossistema front-end:
 
 * **Framework Principal:** **Angular**
-    * *Por quê?* Pela sua arquitetura robusta baseada em componentes, injeção de dependências e um ecossistema completo para construir aplicações escaláveis e de fácil manutenção.
+    * Pela sua arquitetura robusta baseada em componentes, injeção de dependências e um ecossistema completo para construir aplicações escaláveis e de fácil manutenção.
 
-* **Linguagem:** **TypeScript**
-    * *Por quê?* Para adicionar segurança de tipos ao JavaScript, o que reduz drasticamente os erros em tempo de desenvolvimento e melhora a produtividade com recursos como autocompletar e análise estática de código.
-
-* **UI e Estilização:** **Angular Material** & **CSS**
+* **UI e Estilização:** **Angular Material** **CSS** **Tailwind**
     * Angular Material fornece uma biblioteca de componentes de alta qualidade, acessíveis e prontos para uso, acelerando o desenvolvimento de uma interface bonita e consistente.
 
 * **Roteamento:** **Angular Router**
