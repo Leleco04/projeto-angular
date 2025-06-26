@@ -1,36 +1,69 @@
-import { Component } from '@angular/core';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Task, TaskService } from '../services/task.service';
+import { AuthService } from '../services/auth.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { MycomponentComponent } from './mycomponent/mycomponent.component';
 import { SecondComponent } from './second/second.component';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-mypage',
+  standalone: true,
   imports: [
-    MatInputModule, 
-    MatFormFieldModule, 
-    FormsModule,
-    MycomponentComponent,
-    SecondComponent,
-    CommonModule,
-    MatButtonModule
+    CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, MatDialogModule,
+    MatListModule, MycomponentComponent,
+    SecondComponent
   ],
   templateUrl: './mypage.component.html',
-  styleUrl: './mypage.component.css'
+  styleUrls: ['./mypage.component.css']
 })
-export class MypageComponent {
-  nome: string = "";
+export class MypageComponent implements OnInit {
+  tasks$: Observable<Task[]>;
 
-  lista = [
-    { nome: "Fulano de Tal", idade: 20 },
-    { nome: "Beltrano de Tal", idade: 25 },
-    { nome: "Ciclano de Tal", idade: 35 }
-  ];
+  constructor(
+    private taskService: TaskService,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {
+    this.tasks$ = this.taskService.tasks$;
+  }
 
-  enviar() {
-    alert("Boa noite " + this.nome);
+  ngOnInit(): void {
+  }
+
+  onNewTask(): void {
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      width: '450px',
+      data: null
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { this.taskService.addTask(result); }
+    });
+  }
+
+  onEditTask(task: Task): void {
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      width: '450px',
+      data: { ...task }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { this.taskService.updateTask(result); }
+    });
+  }
+
+  onDeleteTask(taskId: string): void {
+    if (window.confirm('Tem certeza que deseja excluir esta tarefa?')) {
+      this.taskService.deleteTask(taskId);
+    }
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

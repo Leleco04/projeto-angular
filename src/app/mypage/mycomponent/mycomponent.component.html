@@ -1,3 +1,17 @@
-<p class="text-red-600">
-    Este é um componente.
-</p>
+<mat-list-item>
+  <mat-icon matListItemIcon>task</mat-icon>
+  <div matListItemTitle>{{ task.title }}</div>
+  <div matListItemLine>{{ task.description }}</div>
+  <div matListItemMeta class="task-actions">
+    <mat-chip [ngClass]="task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</mat-chip>
+    <button mat-icon-button (click)="onEdit()" title="Editar">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onShare()" title="Compartilhar">
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="onDelete()" title="Excluir">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</mat-list-item>

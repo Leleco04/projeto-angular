@@ -1,27 +1,41 @@
-<mat-form-field class="example-full-width">
-    <mat-label>Qual seu nome?</mat-label>
-    <input matInput 
-        placeholder="Fulano de Tal" 
-        [(ngModel)]="nome"
-    >
-</mat-form-field>
+<mat-toolbar color="primary">
+  <span>Lista de Tarefas</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="logout()" title="Sair">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
 
-<div *ngIf="nome.length>0">
-    Você digitou: {{nome}}
+<div class="container-pagina" *ngIf="tasks$ | async as tasks">
+  <div class="conteudo">
+    <header class="page-header">
+      <h2>Minhas Tarefas</h2>
+      <button mat-raised-button color="primary" (click)="onNewTask()">
+        <mat-icon>add</mat-icon> Adicionar Tarefa
+      </button>
+    </header>
+
+    <mat-list *ngIf="tasks.length > 0; else noTasks">
+      <app-mycomponent
+        *ngFor="let task of tasks"
+        [task]="task"
+        (editRequest)="onEditTask($event)"
+        (deleteRequest)="onDeleteTask($event)">
+      </app-mycomponent>
+    </mat-list>
+
+    <ng-template #noTasks>
+<div class="vazio">
+        <mat-icon>inbox</mat-icon>
+        <p>Você não possui nenhuma tarefa!</p>
+      </div>
+    </ng-template>
+
+
+  </div>
+
+  <aside class="sidebar-content">
+    <app-second [tasks]="tasks"></app-second>
+  </aside>
+
 </div>
-
-<button *ngIf="nome.length>0" mat-raised-button (click)="enviar()">
-    Enviar
-</button>
-
-<app-mycomponent></app-mycomponent>
-
-<second-comp>
-    <div class="border-1 p-4">
-        <div *ngFor="let item of lista">
-            <div>
-                Nome: {{item.nome}}, Idade: {{item.idade}} anos.
-            </div>
-        </div>
-    </div>
-</second-comp>

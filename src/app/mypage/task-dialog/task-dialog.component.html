@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{ isEditMode ? 'Editar Tarefa' : 'Nova Tarefa' }}</h1>
+
+<div mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title" required cdkFocusInitial>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Descrição (Opcional)</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+  <mat-form-field *ngIf="isEditMode">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option *ngFor="let status of statuses" [value]="status">{{ status }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="onSave()">Salvar</button>
+</div>

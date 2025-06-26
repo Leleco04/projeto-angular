@@ -1,0 +1,11 @@
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+mat-chip {
+  &.pendente { background-color: #ffc107; color: #000; }
+  &.em-andamento { background-color: #17a2b8; color: white; }
+  &.concluído { background-color: #28a745; color: white; }
+}

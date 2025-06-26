@@ -1,0 +1,11 @@
+.stats-card {
+  background-color: #fafafa;
+}
+
+strong {
+  font-size: 1.1em;
+}
+
+.pendente { color: #fbc02d; }
+.em-progresso { color: #1976d2; }
+.finalizada { color: #388e3c; }

@@ -1,3 +1,12 @@
-<h1 class="text-xl text-center">Segundo componente</h1>
-
-<ng-content></ng-content>
+<mat-card class="stats-card">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>assessment</mat-icon>
+    <mat-card-title>Tarefas</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Total de Tarefas: <strong>{{ tasks.length }}</strong></p>
+    <p class="pendente">Pendentes: <strong>{{ pendingCount }}</strong></p>
+    <p class="em-progresso">Em Andamento: <strong>{{ inProgressCount }}</strong></p>
+    <p class="finalizada">Concluídas: <strong>{{ completedCount }}</strong></p>
+  </mat-card-content>
+</mat-card>

@@ -1,28 +1,49 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatButtonModule} from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MycomponentComponent } from '../mypage/mycomponent/mycomponent.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthService } from '../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [MatProgressSpinnerModule, MatButtonModule,
-    MycomponentComponent
+  imports: [
+    CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule,
+    MatInputModule, MatButtonModule, MatSnackBarModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
+
 export class HomeComponent {
+  loginForm: FormGroup;
 
-  /** Injeção de dependência para que a classe possa 
-   * utilizar o objeto router
-   */
-  constructor(private router: Router) {
-
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['angular', [Validators.required]],
+      password: ['angular', [Validators.required]]
+    });
   }
 
-  continuar() {
-    // Navega para a página identificada pela rota mypage
-    this.router.navigate(['mypage']);
+  onSubmit(): void {
+    if (this.loginForm.invalid) return;
+
+    const { username, password } = this.loginForm.value;
+    if (this.authService.login(username, password)) {
+      this.router.navigate(['/mypage']);
+    } else {
+      this.snackBar.open('Usuário ou senha inválidos!', 'Fechar', { duration: 3000 });
+    }
   }
 }

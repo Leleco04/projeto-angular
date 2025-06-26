@@ -1,0 +1,31 @@
+<div class="detail-container">
+  <mat-card *ngIf="task$ | async as task; else notFound">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>visibility</mat-icon>
+      <mat-card-title>Detalhes da Tarefa</mat-card-title>
+      <mat-card-subtitle>Item compartilhado (somente leitura)</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h2>{{ task.title }}</h2>
+      <p>{{ task.description || 'Esta tarefa não possui uma descrição detalhada.' }}</p>
+      <mat-chip [ngClass]="task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</mat-chip>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar para a Lista
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <ng-template #notFound>
+    <mat-card>
+      <mat-card-content class="not-found-content">
+        <mat-icon>error_outline</mat-icon>
+        <h2>Tarefa não encontrada!</h2>
+        <p>O link pode estar quebrado ou a tarefa foi excluída.</p>
+        <button mat-stroked-button color="warn" (click)="goBack()">Voltar</button>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>
